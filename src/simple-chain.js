@@ -18,15 +18,18 @@ const chainMaker = {
    return this;
   },
   removeLink(position) {
-    if (!Number.isInteger(position) || position <= 0 || position > this.chain.split("~~").length) {
-      throw new Error('You can\'t remove incorrect link!')
+    if (!Number.isInteger(position) || position < 1 || position > this.chain.split("~~").length) {
+      this.chain = "";
+      throw new Error('You can\'t remove incorrect link!');
     } else {
       let arr = this.chain.split("~~");
+      this.chain = "";
     for (let i = 0; i < arr.length; i++) {
-      if (i === position - 1 && position < arr.length) {
+      if (i === position - 1) {
         i++
       }
-        this.chain = i === 0 ? arr[i] : this.chain + `~~${arr[i]}`;
+        this.chain = this.chain === "" ? arr[i] : this.chain + `~~${arr[i]}`;
+        
     }
     return this;
     }
@@ -39,7 +42,9 @@ const chainMaker = {
     return this;
   },
   finishChain() {
-    return this.chain;
+    let str = this.chain;
+    this.chain = "";
+    return str;
   }
 }
 
